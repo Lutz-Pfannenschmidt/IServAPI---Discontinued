@@ -92,9 +92,9 @@ class IServ:
     def __init__(self,username:str, password:str, domain:str):
         """
         Opens a new IServ session using:
-        -username   :str ,
+        -username   :str (name.lastname)!!!NO @YOUR_ISERV.COM!!!,
         -password   :str,
-        -domain     :str
+        -domain     :str (https://your_iserv.com)
         """
         self._csrf_token = None
         self._session = requests.Session()
@@ -140,6 +140,7 @@ class IServ:
             url=self.domain + IServ.paths['logout'],
             params={"_csrf": self._csrf_token}          # Sendet das CSRF Token, welches zum abmelden benötigt wird.
         )
+        return True
 
     @staticmethod
     def _find_csrf(doc):
@@ -217,4 +218,4 @@ class IServ:
 
 
 if __name__ == "__main__":
-    print("Please import this package")
+    print("please install this package")
