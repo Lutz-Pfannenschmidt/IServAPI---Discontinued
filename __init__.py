@@ -218,4 +218,4 @@ class IServ:
 
 
 if __name__ == "__main__":
-    print("please install this package")
+    print("Please import this package")
