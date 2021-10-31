@@ -1,18 +1,20 @@
 # -*- coding: utf-8 -*-
+
+CHARSET = 'utf-8'
 """
 IServAPI
-~~~~~~~~~~~~
-
-IServAPI is an library to query and post from/to ISERV, written in Python.
-Basic usage:
-
-   >>> import iservapi
-   >>> iserv = IServ("username", "password", "https://your_iserv.com")
-   >>> iserv.login():
-   >>> print( iserv.getMailFolders() )
-   >>> iserv.logout()
-
-:copyright: (c) 2021 by Lutz Pfannenschmidt.
+~~~~~~~~
+   
+IServAPI is an library to query and post from/to ISERV, written in Python.   
+Basic usage:   
+  
+   >>> import iservapi   
+   >>> iserv = IServ("username", "password", "protocoll://your_iserv.TLD")   
+   >>> iserv.login():   
+   >>> print( iserv.getMailFolders() )   
+   >>> iserv.logout()   
+    
+:copyright: (c) 2021 by Lutz Pfannenschmidt.   
 """
 import requests
 import random,string
@@ -23,44 +25,6 @@ from requests_toolbelt import MultipartEncoder
 import json
 from webdav3.client import Client
 
-
-encoding = 'utf-8'
-
-class colors:
-    CEND      = '\33[0m'
-    CBOLD     = '\33[1m'
-    CITALIC   = '\33[3m'
-    CURL      = '\33[4m'
-    CBLINK    = '\33[5m'
-    CBLINK2   = '\33[6m'
-    CSELECTED = '\33[7m'
-
-    CBLACK  = '\33[30m'
-    CRED    = '\33[31m'
-    CGREEN  = '\33[32m'
-    CYELLOW = '\33[33m'
-    CBLUE   = '\33[34m'
-    CVIOLET = '\33[35m'
-    CBEIGE  = '\33[36m'
-    CWHITE  = '\33[37m'
-
-    CBLACKBG  = '\33[40m'
-    CREDBG    = '\33[41m'
-    CGREENBG  = '\33[42m'
-    CYELLOWBG = '\33[43m'
-    CBLUEBG   = '\33[44m'
-    CVIOLETBG = '\33[45m'
-    CBEIGEBG  = '\33[46m'
-    CWHITEBG  = '\33[47m'
-
-    CGREY    = '\33[90m'
-    CRED2    = '\33[91m'
-    CGREEN2  = '\33[92m'
-    CYELLOW2 = '\33[93m'
-    CBLUE2   = '\33[94m'
-    CVIOLET2 = '\33[95m'
-    CBEIGE2  = '\33[96m'
-    CWHITE2  = '\33[97m'
 
 def last_param(text:list, same_line_text, split_after="="):
     """returns the last url parameter that is in the same line as 'same_line_text' .  
@@ -92,9 +56,9 @@ class IServ:
     def __init__(self,username:str, password:str, domain:str):
         """
         Opens a new IServ session using:
-        -username   :str (name.lastname)!!!NO @YOUR_ISERV.COM!!!,
+        -username   :str (name.lastname)!!!NO @YOUR_ISERV.TLD!!!,
         -password   :str,
-        -domain     :str (https://your_iserv.com)
+        -domain     :str (protocoll://your_iserv.TLD)
         """
         self._csrf_token = None
         self._session = requests.Session()
@@ -136,9 +100,10 @@ class IServ:
         return True
 
     def logout(self):
+        # Sendet das CSRF Token, welches zum abmelden benötigt wird.
         self._session.get(
             url=self.domain + IServ.paths['logout'],
-            params={"_csrf": self._csrf_token}          # Sendet das CSRF Token, welches zum abmelden benötigt wird.
+            params={"_csrf": self._csrf_token}
         )
         return True
 
@@ -208,12 +173,6 @@ class IServ:
     
     def downloadFile(self, remote_path :str, local_path :str):
         self.webdav.download(remote_path, local_path)
-
-
-
-
-
-
 
 
 
