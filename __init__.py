@@ -172,7 +172,7 @@ class IServ:
         self.webdav.upload(remote_path, local_path)
     
     def downloadFile(self, remote_path :str, local_path :str):
-        self.webdav.download(remote_path, local_path)
+        self.webdav.download(remote_path, local_path)s
 
 
 
